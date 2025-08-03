@@ -27,12 +27,22 @@ document_comparator/
    ```bash
    pip install -r requirements.txt
 
-2. Set your OpenAI API key (temporary session)
-   ```
-    $env:OPENAI_API_KEY="sk-..."    # Windows PowerShell
-    export OPENAI_API_KEY="sk-..."  # macOS/Linux
+2. Set your OpenAI API key
+You have two options:
+   # Windows PowerShell
+      $env:OPENAI_API_KEY="sk-..."
 
-4. (Optional) Generate sample documents
+   # macOS/Linux
+      export OPENAI_API_KEY="sk-..."
+
+Option B – Hardcode it inside summarizer.py
+   Open summarizer.py and replace  OPENAI_API_KEY with your openai api key:
+   
+      openai.api_key = os.getenv("")
+
+Option A – Set it in your environment (temporary):
+
+3. (Optional) Generate sample documents
 Instead of manually writing .docx files, you can auto-generate two versions for testing:
     ```
     python generate_sample_docx.py
