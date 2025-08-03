@@ -52,7 +52,7 @@ See full output in output.txt
 💻 How to Run
 
 1. Clone the repository
-   git clone https://github.com/your-username/freelancer-gig-optimizer.git
+   git clone [https://github.com/your-username/freelancer-gig-optimizer.git](https://github.com/AlexWaynee/AngadPalSingh_SS25_AI.git)
    cd freelancer-gig-optimizer
    
 2. Set up virtual environment
