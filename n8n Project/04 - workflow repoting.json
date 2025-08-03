@@ -1,0 +1,256 @@
+{
+  "name": "04 - workflow repoting",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"Problems\": \"- Slow response\\n- No resolution\",\n  \"Name\": \"John\",\n  \"Timestamp\": \"2025-08-01T12:33:15.000Z\"\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9cab5ff7-c511-46b7-85ff-7d2c93b7e97a",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a support triage assistant. Determine if each customer problem is critical. Respond only with \"Yes\" or \"No\".\n\nExamples:\n- \"App crashes on login\" → Yes  \n- \"Spelling mistake in footer\" → No  \n- \"Laggy interface. Customer disappointment.\" → Yes\n\nNow assess:\nProblem: {{ $json[\"Problems\"].trim() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        208,
+        0
+      ],
+      "id": "76bb84fe-6041-44da-84c3-dda9e7dfbf83",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "b84LgFIJzNuxMiSE",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "360767d7-7a3c-47c3-9eaf-dac5d6268f69",
+              "leftValue": "message.content",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "3cc3fc20-2356-4f09-a30b-e20e0f3887fa",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "angadpal04@gmail.com",
+        "subject": "=⚠️ Critical Feedback Alert from {{ $('When Executed by Another Workflow').item.json.Name }}",
+        "message": "=<p><strong>🚨 A critical issue was flagged in feedback:</strong></p>\n\n<p>\n  <strong>👤 Name:</strong> {{ $('When Executed by Another Workflow').item.json.Name }}<br>\n  <strong>🕒 Timestamp:</strong> {{ $('When Executed by Another Workflow').item.json.Timestamp }}\n</p>\n\n<p><strong>🛑 Extracted Problems:</strong></p>\n<p>{{ $('When Executed by Another Workflow').item.json.Problems }}</p>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        768,
+        -96
+      ],
+      "id": "e8cd697a-10c7-4a7e-99af-e0c9736db64f",
+      "name": "Send a message",
+      "webhookId": "615531c7-a8d1-49fe-b175-8556e5ce1e77",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BKRkLzIu2tRoNedr",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "155uxKb5K1n9tJE5cXZGIrHOiD2cbwkYWrVZ2gZGg8Zc",
+          "mode": "list",
+          "cachedResultName": "UnFeedback_Form_Responsestitled form (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/155uxKb5K1n9tJE5cXZGIrHOiD2cbwkYWrVZ2gZGg8Zc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1249833757,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/155uxKb5K1n9tJE5cXZGIrHOiD2cbwkYWrVZ2gZGg8Zc/edit#gid=1249833757"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "Timestamp"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Name ",
+              "displayName": "Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "  Feedback  ",
+              "displayName": "  Feedback  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Sentiment",
+              "displayName": "Sentiment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        976,
+        -96
+      ],
+      "id": "caf1334c-0401-4938-8263-2ceeefe16a6d",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ZW0OotUuxpETwtgf",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "15fc895d-2d9c-46e6-98d2-6c938598f3c6",
+  "meta": {
+    "instanceId": "6f823d301e3815fa3adf876f1b62c2b0555fd048347dac9a0f30e3b537dfb01b"
+  },
+  "id": "7J5T16YJX4vtRb1X",
+  "tags": []
+}

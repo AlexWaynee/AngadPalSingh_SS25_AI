@@ -1,0 +1,112 @@
+{
+  "name": "01 - Feedback Trigger Dispatcher",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "feedback-received",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -368,
+        0
+      ],
+      "id": "3653d992-98d5-498a-a3d7-00c420ea23c1",
+      "name": "Webhook",
+      "webhookId": "5a1ae227-fb0a-4606-b835-b63238cb023c"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "weiz6KFQh7DkLWSs",
+          "mode": "list",
+          "cachedResultName": "02 - Sentiment Analysis Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Feedback": "={{ $json.body.feedback }}",
+            "Name": "={{ $json.body.name }}",
+            "Timestamp": "={{ $json.body.timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Feedback",
+              "displayName": "Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -112,
+        -16
+      ],
+      "id": "cfad5df7-50ae-4ec0-90c6-99883eee3367",
+      "name": "Execute Workflow2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow2": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "35a4e22e-3ed7-4e74-b881-4397bd9a9b0d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f823d301e3815fa3adf876f1b62c2b0555fd048347dac9a0f30e3b537dfb01b"
+  },
+  "id": "eJPfSlqT253aB6Fm",
+  "tags": []
+}
