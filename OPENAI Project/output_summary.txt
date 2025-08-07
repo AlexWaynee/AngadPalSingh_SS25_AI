@@ -1,0 +1,21 @@
+📝 DIFF OUTPUT:
+--- Version 1
++++ Version 2
+@@ -1,7 +1,7 @@
+-Project Report – AI Document Comparator
++Project Report – DocDiff AI
+ 
+-This project is aimed at comparing two text-based documents and identifying changes.
++This project is designed to compare DOCX and TXT documents and highlight all textual changes.
+ 
+-The tool helps editors and reviewers keep track of revisions between versions.
++It assists writers, editors, and reviewers in efficiently identifying differences.
+ 
+-The current version supports only plain text and basic formatting.
++The tool now supports both plain text and DOCX files, including basic formatting.
+
+🧠 GPT SUMMARY OF CHANGES:
+1. The project name has been changed from "AI Document Comparator" to "DocDiff AI".
+2. The project's aim has been updated to specifically compare DOCX and TXT documents and highlight all textual changes, instead of just comparing two text-based documents and identifying changes.
+3. The tool's user base has been expanded to include writers, in addition to editors and reviewers.
+4. The tool's capabilities have been updated to include support for DOCX files along with plain text and basic formatting.
